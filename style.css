@@ -44,4 +44,12 @@ ul {
 
 li {
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li button {
+    padding: 5px 10px;
+    font-size: 14px;
 }

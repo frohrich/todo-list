@@ -30,16 +30,27 @@ function adicionarTarefa() {
     // Cria um novo item de lista <li>
     let item = document.createElement('li')
 
-    // Coloca o texto da tarefa dentro do <li>
-    item.innerText = tarefa
+    // Cria um span para guardar o texto da tarefa
+    let texto = document.createElement('span')
+    texto.innerText = tarefa
+
+    // Cria o botão de excluir
+    let btnExcluir = document.createElement('button')
+    btnExcluir.innerText = 'Excluir'
+
+    // Quando clicar no botão, remove o item da lista
+    btnExcluir.addEventListener('click', function () {
+        lista.removeChild(item)
+    })
+
+    // Coloca o texto e o botão dentro do item
+    item.appendChild(texto)
+    item.appendChild(btnExcluir)
 
     // Adiciona o <li> dentro da <ul>
     lista.appendChild(item)
 
-    // Limpa o campo depois de adicionar
+    // Limpa o campo e devolve o foco
     txtTarefa.value = ''
-
-    // Coloca o cursor de volta no input
     txtTarefa.focus()
 }
-
