@@ -78,7 +78,7 @@ function criarTarefaNaTela(tarefa) {
         if (lista.children.length === 0) {
             let itemVazio = document.createElement('li')
             itemVazio.innerText = 'Nenhuma tarefa adicionada'
-            itemVazio.id = 'vazio'
+            itemVazio.classList.add('vazio')
             lista.appendChild(itemVazio)
         }
     })
