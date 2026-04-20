@@ -26,3 +26,6 @@ Praticar manipulação do DOM, eventos, arrays e armazenamento local.
 ## 🔗 Autor
 Gabriel Frohrich  
 https://github.com/frohrich
+
+## 📷 Preview
+![Preview da To-do List](https://github.com/user-attachments/assets/4468fbbd-c0ea-4528-a400-7fa43f3e2b34)
