@@ -15,6 +15,7 @@ btnAdicionar.addEventListener('click', adicionarTarefa)
 
 // Função responsável por adicionar uma nova Tarefa
 function adicionarTarefa() {
+    
     // Pega o texto digitado pelo usuário
     let tarefa = txtTarefa.value
 
@@ -22,6 +23,16 @@ function adicionarTarefa() {
     if (tarefa.length === 0) {
         alert('Digite uma tarefa antes de adicionar.')
         return
+    }
+
+    if (lista.children.length === 1 && lista.children[0].innerHTML === 'Nenhuma tarefa adicionada.') {
+        lista.innerHTML = ''
+    }
+
+    let vazio = document.querySelector('#vazio')
+
+    if (vazio) {
+        vazio.remove()
     }
     
     // Adicionar a tarefa no array
@@ -33,6 +44,10 @@ function adicionarTarefa() {
     // Cria um span para guardar o texto da tarefa
     let texto = document.createElement('span')
     texto.innerText = tarefa
+
+    texto.addEventListener('click', function(){
+        texto.classList.toggle('concluida')
+    })
 
     // Cria o botão de excluir
     let btnExcluir = document.createElement('button')
@@ -52,5 +67,9 @@ function adicionarTarefa() {
 
     // Limpa o campo e devolve o foco
     txtTarefa.value = ''
-    txtTarefa.focus()
+    txtTarefa.focus()   
 }
+let itemVazio = document.createElement('li')
+itemVazio.innerText = 'Nenhuma tarefa adicionada'
+itemVazio.id = 'vazio'
+lista.appendChild(itemVazio)
