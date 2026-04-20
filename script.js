@@ -1,4 +1,4 @@
-// Seleciona o campo de texte onde o usuário digita a tarefa
+// Seleciona o campo de texto onde o usuário digita a tarefa
 let txtTarefa = document.querySelector('#txttarefa')
 
 // Seleciona o botão de adicionar
@@ -13,63 +13,79 @@ let tarefas = []
 // Quando o botão for clicado, a função adicionarTarefa será executada
 btnAdicionar.addEventListener('click', adicionarTarefa)
 
-// Função responsável por adicionar uma nova Tarefa
+function salvarTarefas() {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+}
+
+// Função responsável por adicionar uma nova tarefa
 function adicionarTarefa() {
-    
-    // Pega o texto digitado pelo usuário
     let tarefa = txtTarefa.value
 
-    // Verifica se o campo está vazio
     if (tarefa.length === 0) {
         alert('Digite uma tarefa antes de adicionar.')
         return
     }
 
-    if (lista.children.length === 1 && lista.children[0].innerHTML === 'Nenhuma tarefa adicionada.') {
-        lista.innerHTML = ''
-    }
-
     let vazio = document.querySelector('#vazio')
-
     if (vazio) {
         vazio.remove()
     }
-    
-    // Adicionar a tarefa no array
-    tarefas.push(tarefa)
 
-    // Cria um novo item de lista <li>
+    tarefas.push(tarefa)
+    salvarTarefas()
+    criarTarefaNaTela(tarefa)
+
+    txtTarefa.value = ''
+    txtTarefa.focus()
+}
+
+function carregarTarefas() {
+    let tarefasSalvas = localStorage.getItem('tarefas')
+
+    if (tarefasSalvas) {
+        tarefas = JSON.parse(tarefasSalvas)
+        lista.innerHTML = ''
+
+        for (let tarefa of tarefas) {
+            criarTarefaNaTela(tarefa)
+        }
+    }
+}
+
+function criarTarefaNaTela(tarefa) {
     let item = document.createElement('li')
 
-    // Cria um span para guardar o texto da tarefa
     let texto = document.createElement('span')
     texto.innerText = tarefa
 
-    texto.addEventListener('click', function(){
+    texto.addEventListener('click', function () {
         texto.classList.toggle('concluida')
     })
 
-    // Cria o botão de excluir
     let btnExcluir = document.createElement('button')
     btnExcluir.innerText = 'Excluir'
 
-    // Quando clicar no botão, remove o item da lista
     btnExcluir.addEventListener('click', function () {
+        let pos = tarefas.indexOf(tarefa)
+
+        if (pos !== -1) {
+            tarefas.splice(pos, 1)
+        }
+
         lista.removeChild(item)
+        salvarTarefas()
+
+        if (lista.children.length === 0) {
+            let itemVazio = document.createElement('li')
+            itemVazio.innerText = 'Nenhuma tarefa adicionada'
+            itemVazio.id = 'vazio'
+            lista.appendChild(itemVazio)
+        }
     })
 
-    // Coloca o texto e o botão dentro do item
     item.appendChild(texto)
     item.appendChild(btnExcluir)
-
-    // Adiciona o <li> dentro da <ul>
     lista.appendChild(item)
-
-    // Limpa o campo e devolve o foco
-    txtTarefa.value = ''
-    txtTarefa.focus()   
 }
-let itemVazio = document.createElement('li')
-itemVazio.innerText = 'Nenhuma tarefa adicionada'
-itemVazio.id = 'vazio'
-lista.appendChild(itemVazio)
+
+carregarTarefas()
